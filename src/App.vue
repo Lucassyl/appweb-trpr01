@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import HelloWorld from './components/HelloWorld.vue'
+import Header from './components/Header.vue'
+
 import "bootstrap/dist/css/bootstrap.min.css"
 import './css/bootstrap.min.css'
 import './css/style.css'
@@ -7,18 +9,19 @@ import './css/style.css'
 
 <template>
   <div>
-    <a href="https://vite.dev" target="_blank">
+    <!--<a href="https://vite.dev" target="_blank">
       <img src="/vite.svg" class="logo" alt="Vite logo" />
     </a>
     <a href="https://vuejs.org/" target="_blank">
       <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+    </a>-->
   </div>
+  <Header />
   <HelloWorld msg="Vite + Vue" />
 </template>
 
 <style scoped>
-.logo {
+/*.logo {
   height: 6em;
   padding: 1.5em;
   will-change: filter;
@@ -29,5 +32,5 @@ import './css/style.css'
 }
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #42b883aa);
-}
+}*/
 </style>

@@ -4,6 +4,12 @@ import { ref } from 'vue'
 defineProps<{ msg: string }>()
 
 const count = ref(0)
+
+if (count)
+{
+    
+}
+
 </script>
 
 <template>
@@ -17,15 +23,15 @@ const count = ref(0)
               <div class="card-body">
                   <div class="mb-3">
                       <label class="form-label">Nom du jeu</label>
-                      <input
+                      <!--<input
                           v-model="newGameName"
                           class="form-control"
                           placeholder="Entrer le nom du jeu"
-                      />
+                      />-->
                   </div>
                   <div class="mb-3">
                       <label class="form-label">Console</label>
-                      <select v-model="newGameConsole" class="form-select">
+                      <!--<select v-model="newGameConsole" class="form-select">
                           <option
                               v-for="console in consoles"
                               :key="console"
@@ -33,15 +39,15 @@ const count = ref(0)
                           >
                               {{ console }}
                           </option>
-                      </select>
+                      </select>-->
                   </div>
-                  <button
-                      @click="addGame"
+                  <!--<button
+                  @click="addGame"
                       class="btn btn-primary w-100"
                       :disabled="!newGameName.trim()"
                   >
                       Ajouter le jeu
-                  </button>
+                  </button>-->
               </div>
           </div>
           
@@ -55,15 +61,15 @@ const count = ref(0)
               <div class="card-body">
                   <div class="mb-3">
                       <label class="form-label">Nom du jeu</label>
-                      <input
+                      <!--<input
                           v-model="newGameName"
                           class="form-control"
                           placeholder="Entrer le nom du jeu"
-                      />
+                      />-->
                   </div>
                   <div class="mb-3">
                       <label class="form-label">Console</label>
-                      <select v-model="newGameConsole" class="form-select">
+                      <!--<select v-model="newGameConsole" class="form-select">
                           <option
                               v-for="console in consoles"
                               :key="console"
@@ -71,15 +77,15 @@ const count = ref(0)
                           >
                               {{ console }}
                           </option>
-                      </select>
+                      </select>-->
                   </div>
-                  <button
+                  <!--<button
                       @click="addGame"
                       class="btn btn-success w-100"
                       :disabled="!newGameName.trim()"
                   >
                       Ajouter le jeu
-                  </button>
+                  </button>-->
               </div>
           </div>
       </div>
