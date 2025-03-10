@@ -165,13 +165,13 @@ import type { Resin } from './scripts/types.ts';
     // =====*****=====_____=====*****=====_____=====*****=====_____=====*****=====_____=====*****=====
     // Gestion de la liste des resin a affichier
     // =====*****=====_____=====*****=====_____=====*****=====_____=====*****=====_____=====*****=====
-    var listeAffichier = resins
+    /*var listeAffichier = resins
 
     if (resinCorrespondante.value.length != 0) {
       listeAffichier = resinCorrespondante
     }else{
         listeAffichier = resins
-    }
+    }*/
 
 </script>
 
