@@ -12,7 +12,7 @@
 <template>
     <header class="btn-group p-3 container">
         <section id="banniere" class="d-flex row ">
-            <img class="col-12 img-fluid d-none d-lg-block" src="../assets/image/personnage.jpg" alt="Bannière De l'inventaire de resin pour impression 3D">
+            <img class="col-12 img-fluid d-none d-lg-block" src="../assets/image/banner2.png" alt="Bannière De l'inventaire de resin pour impression 3D">
             <!--<img class="col-12 img-fluid d-none d-lg-block" :src="randomImage" alt="Bannière De l'inventaire de resin pour impression 3D">-->
             <!--<img v-if="!imageLoaded" class="col-12 img-fluid d-none d-lg-block" :src="../assets/image/errorWhat.jpg" alt="Bannière De l'inventaire de resin pour impression 3D">-->
             <h1 class="col-12 mb-0">Controleur d'inventaire</h1>
