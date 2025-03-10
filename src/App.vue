@@ -156,7 +156,7 @@ import type { Resin } from './scripts/types.ts';
     // =====*****=====_____=====*****=====_____=====*****=====_____=====*****=====_____=====*****=====
     // Gestion de la recherche
     // =====*****=====_____=====*****=====_____=====*****=====_____=====*****=====_____=====*****=====
-    const resinCorrespondante = ref<Resin[]>([])
+    /*const resinCorrespondante = ref<Resin[]>([])*/
 
     const rechercheResine = () => {
 

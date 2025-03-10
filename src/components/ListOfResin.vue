@@ -10,6 +10,10 @@ import { type Resin } from "../scripts/types";
         resins: Resin[];
     }>();
 
+    if(props){
+        console.log("echo test");
+    }
+
     const emit = defineEmits<{
         (event: 'copierResin', resin: Resin): void;
         (event: 'retirerResine', resin: Resin): void;
