@@ -14,13 +14,6 @@ import ListOfResin from './components/ListOfResin.vue'
 import type { Resin, Caracteristique } from './scripts/types.ts';
 
     // =====*****=====_____=====*****=====_____=====*****=====_____=====*****=====_____=====*****=====
-    //Constante
-    // =====*****=====_____=====*****=====_____=====*****=====_____=====*****=====_____=====*****=====
-    /*const emit = defineEmits<{
-        (event: 'existe', resin: Resin): void;
-    }>();*/
-
-    // =====*****=====_____=====*****=====_____=====*****=====_____=====*****=====_____=====*****=====
     // function et variable pour la gestion de l'affichage
     // =====*****=====_____=====*****=====_____=====*****=====_____=====*****=====_____=====*****=====
 
@@ -60,16 +53,7 @@ import type { Resin, Caracteristique } from './scripts/types.ts';
     // =====*****=====_____=====*****=====_____=====*****=====_____=====*****=====_____=====*****=====
     const resins = ref<Resin[]>([])
 
-    /*const newResin = ref<Resin>({
-        id: creationId(),
-        brand: '',
-        description: '',
-        color: '',
-        quantity: 0,
-        caracteristique: []
-    });*/
-    
-    const newTestResin = ref<Resin>({// remove test resin befor remise
+    const newTestResin = ref<Resin>({
         id: creationId(),
         marque: "Elagoo",
         description: "la resin de parametrage des imprimate Elagoo",
@@ -89,29 +73,40 @@ import type { Resin, Caracteristique } from './scripts/types.ts';
     // =====*****=====_____=====*****=====_____=====*****=====_____=====*****=====_____=====*****=====
     // Test si Resin existe deja
     // =====*****=====_____=====*****=====_____=====*****=====_____=====*****=====_____=====*****=====
-    const resinExiste = ref<boolean>(false);
+
+    let resinExiste = ref<boolean>(true);
+    let resinModifierExiste = ref<boolean>(true);
 
     const testerResine = (resinTester: Resin) => {
-      console.log('teste 1');
-      console.log(resin.marque);
-      console.log(resinTester.marque);
-      console.log(resin.description);
-      console.log(resinTester.description);
-      console.log(resin.color);
-      console.log(resinTester.color);
-      console.log(resin.caracteristique);
-      console.log(resinTester.caracteristique);
-        const existe = resins.value.some(resin => 
+        console.log('test if resin exist');
+        const existe = resins.value.some(resin =>
             resin.marque === resinTester.marque &&
             resin.description === resinTester.description &&
             resin.color === resinTester.color &&
-            JSON.stringify(resin.caracteristique) === JSON.stringify(resinTester.caracteristique)
-        );
+            JSON.stringify(resin.caracteristique.sort()) === JSON.stringify(resinTester.caracteristique.sort())
+        )
         console.log(existe);
         resinExiste.value = existe;
-        return existe;
     }
 
+    const testerModificationResine = (resinTester: Resin) => {
+        console.log('test if resin exist other than modify');
+        const existe = resins.value.some(resin =>
+            resin.id != resinTester.id &&
+            resin.marque === resinTester.marque &&
+            resin.description === resinTester.description &&
+            resin.color === resinTester.color &&
+            JSON.stringify(resin.caracteristique.sort()) === JSON.stringify(resinTester.caracteristique.sort())
+        )
+        console.log(resinTester.id)
+        console.log('already exist ' + existe);
+        resinModifierExiste.value = existe;
+    }
+
+    const resetExist = () => {
+        resinExiste.value = true;
+        resinModifierExiste.value = true;
+    }
 
     // =====*****=====_____=====*****=====_____=====*****=====_____=====*****=====_____=====*****=====
     // Gestion des copy
@@ -130,25 +125,23 @@ import type { Resin, Caracteristique } from './scripts/types.ts';
     const resinSelectionee = ref<Resin | null>(null);
 
     const modifierResine = (updatedResin: Resin) => {
-        const resinIndex = resins.value.findIndex(resin => resin.id === updatedResin.id);
-        if (resinIndex !== -1) {
-        // Mettre à jour les valeurs de la résine trouvée
-        resins.value[resinIndex] = { ...updatedResin };
-        console.log('Résine mise à jour:', updatedResin);
-  }
+        resins.value.forEach(resin => {
+            if(updatedResin.id === resin.id ){
+                resin.marque = updatedResin.marque;
+                resin.description = updatedResin.description;
+                resin.caracteristique = updatedResin.caracteristique;
+                resin.color = updatedResin.color;
+                resin.quantity = updatedResin.quantity;
+                console.log('Résine mise à jour:', updatedResin);
+            }
+        });
     }
 
     const selectionerResinModifiable = (resin: Resin) => {
         menuVisibleModification.value = true;
         menuVisibleRecherche.value = false;
         resinSelectionee.value = { ...resin };
-        /*const game = games.value.find((game) => game.id === id);
-        if (game) {
-            selectedGameId.value = id;
-            editGameName.value = game.name;
-            editGameConsole.value = game.console;
-        }*/
-        console.log('copierResin launched');
+        
     };
 
 
@@ -193,46 +186,37 @@ import type { Resin, Caracteristique } from './scripts/types.ts';
             <!--:resinExist="resinExist"-->
             <Creation 
                 @existe="testerResine" 
-                @ajouter="ajouterResine" 
+                @ajouter="ajouterResine"
+                @reset="resetExist" 
                 :copieResin="copieResin" 
                 :resinExiste="resinExiste"
               />
-            <div class="col-md-6">
+            <div class="col-12 col-md-6">
                   <Modification v-if="menuVisibleModification" 
-                      @existe="testerResine" 
+                      @existe="testerModificationResine" 
                       @modifier="modifierResine" 
+                      @reset="resetExist" 
                       :resinSelectionee="resinSelectionee" 
-                      :resinExiste="resinExiste"
+                      :resinExiste="resinModifierExiste"
                   />
                   <Recherche v-if="menuVisibleRecherche" 
                       @recherche="rechercheResine"
                   />
             </div>
-            <button @click="changerVisibiliterList">
+            <button class="btn btn-light" @click="changerVisibiliterList">
                 {{ listeVisible ? 'Cacher la liste des résines' : 'Montrer la liste des résines' }}
             </button>
             <ListOfResin v-if="listeVisible" 
-            :resins="listeAffichier" 
-            @copierResin="copierResin" 
-            @retirerResine="retirerResine"  
-            @selectionerResinModifiable="selectionerResinModifiable"
-            @existe="testerResine"
-            :resinModifiable="resinModifiable" />
+                :resins="resins" 
+                @copierResin="copierResin" 
+                @retirerResine="retirerResine"  
+                @selectionerResinModifiable="selectionerResinModifiable"
+                @existe="testerResine"
+             />
         </div>
     </div>
 </template>
 
 <style scoped>
-/*.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}*/
+
 </style>

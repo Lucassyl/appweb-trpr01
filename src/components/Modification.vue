@@ -3,13 +3,22 @@
     import quantitéMinimum from './Creation.vue'
     import type { Resin, Caracteristique } from "../scripts/types";
 
+    const caracteristiqueOptions: Caracteristique[] = ["Clear", "Rigid", "Tought", "Flexible",
+    "Water Washable", "Precision Model", "Biocompatible", "Hight Temp", "Castable"];
+
+    var resinExisteDeja = false;
+    var activerMenuModification = false
+
     const emit = defineEmits<{
         (event: 'modifier', resin: Resin): void;
-        (event: 'existe', resin: Resin): boolean;
+        (event: 'existe', resin: Resin): void;
+        (event: 'reset'):void;
     }>();
-
-    const caracteristiqueOptions: Caracteristique[] = ["Clear", "Rigid", "Tought", "Flexible",
-     "Water Washable", "Precision Model", "Biocompatible", "Hight Temp", "Castable"];
+    
+    const props = defineProps<{
+        resinSelectionee: Resin | null;
+        resinExiste: boolean;
+    }>();
 
     const resinModifiee = ref<Resin>({
         id: 0, // identifiant assigner a zero a la creation et changer quand ajouter a la liste
@@ -20,10 +29,12 @@
         caracteristique: [],
     });
 
-    const props = defineProps<{
-        resinSelectionee: Resin | null;
-        resinExiste: boolean;
-    }>();
+    watch(() => props.resinSelectionee, (resinModifiable) => {
+        if (resinModifiable) {
+            activerMenuModification = true
+            resinModifiee.value = { ...resinModifiable };
+        }
+    })
 
     function changeCaracteristique(caracteristique: Caracteristique) {
         if (resinModifiee.value.caracteristique.includes(caracteristique))
@@ -35,11 +46,29 @@
         }
     }
 
+    // =====*****=====_____=====*****=====_____=====*****=====_____=====*****=====_____=====*****=====
+    // Gestion de la modification d'une resin 
+    // =====*****=====_____=====*****=====_____=====*****=====_____=====*****=====_____=====*****=====
+
     const modificationResin = () => {
-        //console.log('test');
         const valeurResin = { ...resinModifiee.value };
-        emit('existe', valeurResin)
-        if (!props.resinExiste) {
+        emit('existe', valeurResin);
+    };
+
+    watch(() => props.resinExiste, (newValue) => {
+        resinExisteDeja = newValue
+        console.log('existe deja est egale a :' + resinExisteDeja);
+        modificationResinCompletition();
+        emit('reset');
+    })
+
+    const modificationResinCompletition = () => {
+        const valeurResin = { ...resinModifiee.value };
+        console.log(valeurResin.marque)
+        console.log(valeurResin.description)
+        console.log(valeurResin.color)
+        if (!resinExisteDeja) {
+            console.log("does not exist")
             resinModifiee.value = {
             id: 0,
             marque: '',
@@ -50,32 +79,33 @@
             };
             emit('modifier', valeurResin);
         }
+        activerMenuModification = false
     };
 
 </script>
 
 <template>
-    <form v-if="resinSelectionee != null" class="card p-2 mb-12" @submit.prevent="modificationResin">
+    <form v-if="activerMenuModification" class="card p-2 mb-12" @submit.prevent="modificationResin">
         <div class="align-item-center d-inline-flex flex-column">
             <div class="card-header bg-warning text-white mb-4">
                 <h5 class="card-title mb-0">Modifier la resine</h5>
             </div>
-            <div class="mb-4 col-8">
-                <label class="col-3" for="marque">Marque:</label>
-                <input class="col-9" v-model="resinSelectionee.marque" type="text" id="marque" required />
+            <div class="mb-4 col-10">
+                <label class="col-4" for="marque">Marque:</label>
+                <input class="col-8" v-model="resinModifiee.marque" type="text" id="marque" required />
             </div>
-            <div class="mb-4 col-8">
-                <label class="col-3" for="description">Description:</label>
-                <input class="col-9" v-model="resinSelectionee.description" type="text" id="description" required />
+            <div class="mb-4 col-10">
+                <label class="col-4" for="description">Description:</label>
+                <input class="col-8" v-model="resinModifiee.description" type="text" id="description" required />
             </div>
-            <div class="mb-4 col-8">
-                <label class="col-3" for="color">Couleur:</label>
-                <input class="col-9" v-model="resinSelectionee.color" type="text" id="color" required />
-                <p v-if="resinSelectionee.quantity < quantitéMinimum.value" class="btn-outline-danger">Impossible d'avoir un nombre négatif comme quantité.</p>
+            <div class="mb-4 col-10">
+                <label class="col-4" for="color">Couleur:</label>
+                <input class="col-8" v-model="resinModifiee.color" type="text" id="color" required />
+                <p v-if="resinModifiee.quantity < quantitéMinimum.value" class="btn-outline-danger">Impossible d'avoir un nombre négatif comme quantité.</p>
             </div>
-            <div class="mb-4 col-8">
-                <label class="col-3" for="quantity">Quantité:</label>
-                <input class="col-9" v-model.number="resinSelectionee.quantity" type="number" id="quantity" required />
+            <div class="mb-4 col-10">
+                <label class="col-4" for="quantity">Quantité:</label>
+                <input class="col-8" v-model.number="resinModifiee.quantity" type="number" id="quantity" required />
             </div>
             <div class="col-md-12">
                 <label v-for="caracteristique in caracteristiqueOptions" :key="caracteristique" class="col-md-4">
@@ -83,15 +113,15 @@
                     @click="changeCaracteristique(caracteristique)"
                     type="checkbox" 
                     :value="caracteristique" 
-                    v-model="resinSelectionee.caracteristique"
+                    v-model="resinModifiee.caracteristique"
                     />
                     {{ caracteristique }}
                 </label>
             </div>
-            <button type="submit">Créer Résine</button>
+            <button class="btn btn-warning" type="submit">Créer Résine</button>
         </div>
     </form>
-    <div v-if="resinSelectionee == null" class="card p-2  mb-12">
+    <div v-if="!activerMenuModification/*resinSelectionee == null*/" class="card p-2  mb-12">
         <div  class="align-item-center d-inline-flex flex-column">
             <div class="card-header bg-warning text-white mb-4">
                 <h5 class="card-title mb-0">Modifier la resine</h5>

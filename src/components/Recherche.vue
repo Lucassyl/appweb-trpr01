@@ -1,49 +1,29 @@
 <script setup lang="ts">
     import { ref, defineEmits } from 'vue';
 
-    const emit = defineEmits(["recherche"]);
+    const emit = defineEmits<{
+        (event: 'recherche', marque: String): void;
+    }>();
+
+    const rechercheResin = () => {
+        emit('recherche', "mock_String");
+    };
 
 </script>
 
 <template>
-    <form class="card p-2" @submit.prevent=""></form>
-    <div class="card-header bg-primary text-white">
-        <h5 class="card-title mb-0">chercher une resin</h5>
-    </div>
-    <div class="card-body">
-        <div class="mb-3">
-            <label class="form-label">Teste rechercher</label>
-            <!--<input
-            v-model="newGameName"
-            class="form-control"
-            placeholder="Entrer le nom du jeu"
-            />-->
+    <form class="card p-2 mb-12" @submit.prevent="rechercheResin">
+        <div class="align-item-center d-inline-flex flex-column">
+            <div class="card-header bg-primary text-white mb-4">
+                <h5 class="card-title mb-0">chercher une resin</h5>
+            </div>
+            <div class="mb-4 col-10">
+                <label class="col-4" for="marque">Marque:</label>
+                <input class="col-8"  type="text" id="marque" required />
+            </div>
+            <button class="btn btn-primary w-100" type="submit">Recherche Résine</button>
         </div>
-        <div class="mb-3">
-            <label class="form-label">Console</label>
-            <!--<select v-model="newGameConsole" class="form-select">
-            <option
-            v-for="console in consoles"
-            :key="console"
-            :value="console"
-            >
-            {{ console }}
-            </option>
-            </select>-->
-        </div>
-        <!--<button
-        @click="addGame"
-        class="btn btn-success w-100"
-        :disabled="!newGameName.trim()"
-        >
-        Ajouter le jeu
-        </button>-->
-        <button 
-        @click="emit('recherche')"
-        class="btn btn-primary w-100">
-            Recherche
-        </button>
-    </div>
+    </form>
 </template>
 
 <style>
