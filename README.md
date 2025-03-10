@@ -1,11 +1,17 @@
-# Vue 3 + TypeScript + Vite
+# Vue 3 + TypeScript + Vite #
 
-Un site web de gestation d'inventaire de resin pour impression 3d
+Un site web de gestion d'inventaire de résines pour impression 3D
 
 ##### Mention IA #####
-Toute les image utiliser dans le site web on été créée et amélioré par des IA
-Le bootstrap de la partie affichage de liste a été partielement faite via IA
-La corection du fichier README.md a été faite pad ChatGPT
+Toutes les images utilisées dans le site web ont été créées et améliorées par des IA
+Le bootstrap de la partie affichage de la liste a été partiellement généré via IA.
+La correction du fichier README.md a été réalisée par ChatGPT.
 
-##### URL RepoGithub
+##### URL RepoGithub #####
 https://github.com/Lucassyl/appweb-trpr01.git
+
+
+##### URL SITES DEPLOYÉ #####
+
+##### Autre Mention #####
+Oui, le bouton "Modifier" fonctionne, mais il faut cliquer plusieurs fois pour faire apparaître la zone de modification.
