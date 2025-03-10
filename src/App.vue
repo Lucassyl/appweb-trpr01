@@ -11,7 +11,7 @@ import Modification from './components/Modification.vue'
 import Recherche from './components/Recherche.vue'
 import ListOfResin from './components/ListOfResin.vue'
 
-import type { Resin, Caracteristique } from './scripts/types.ts';
+import type { Resin } from './scripts/types.ts';
 
     // =====*****=====_____=====*****=====_____=====*****=====_____=====*****=====_____=====*****=====
     // function et variable pour la gestion de l'affichage
