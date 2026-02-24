@@ -16,12 +16,12 @@ Learn more about the recommended Project Setup and IDE Support in the [Vue Docs 
 - [ ] Je peux exporter la liste des produits en CSV
 
 
-Git command / recit
-git checkout -b recitX
-git status
-git add .
-git commit -m ""
-git push origin recitX
-git checkout main
-git merge recitX
-git push origin main
+# Git command / recit
+- git checkout -b recitX
+- git status
+- git add .
+- git commit -m ""
+- git push origin recitX
+- git checkout main
+- git merge recitX
+- git push origin main
