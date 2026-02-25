@@ -1,0 +1,60 @@
+Parent Component
+In the parent component, you can bind a reactive object or data structure using v-model as you would any other value. 
+vue
+<!-- Parent.vue -->
+<script setup>
+import { ref } from 'vue';
+import UserForm from './UserForm.vue';
+
+// Define the reactive object (your "interface")
+const userData = ref({
+  name: '',
+  email: ''
+});
+</script>
+
+<template>
+  <div>
+    <h2>User Data in Parent: {{ userData }}</h2>
+    <!-- Bind the object with v-model -->
+    <UserForm v-model="userData" />
+  </div>
+</template>
+ 
+Vue.js
+Vue.js
+Child Component (UserForm.vue)
+In the child component, the defineModel() macro handles both the receiving prop and the emitting of the update event, providing a ref that you can use directly with input elements or modify programmatically. 
+Vue School
+Vue School
+ +3
+vue
+<!-- UserForm.vue -->
+<script setup>
+import { defineModel } from 'vue';
+
+// Define the model, it will automatically sync with the parent's v-model binding.
+// The default prop name is 'modelValue' if no argument is provided to defineModel().
+const model = defineModel(); 
+</script>
+
+<template>
+  <div class="form-container">
+    <label>
+      Name:
+      <!-- Bind inputs directly to the properties of the model ref -->
+      <input type="text" v-model="model.name" />
+    </label>
+    <label>
+      Email:
+      <input type="email" v-model="model.email" />
+    </label>
+  </div>
+</template>
+ 
+Vue.js
+Vue.js
+Key Points
+defineModel(): This macro is the recommended approach in modern Vue 3 (since 3.4) and automatically manages the boilerplate of accepting a modelValue prop and emitting update:modelValue events.
+Reactivity with Objects: When you modify properties of the model.value object within the child component (e.g., model.name = '...'), the changes are automatically synchronized back to the parent component due to Vue's two-way binding mechanism.
+Alternative (Manual Approach): If you are using an older Vue version or prefer the explicit method, you would use a computed property with a get and set to achieve the same result manually, using defineProps and defineEmits

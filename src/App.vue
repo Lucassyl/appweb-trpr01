@@ -2,8 +2,9 @@
 //import HelloWorld from './components/HelloWorld.vue'
 import Inventaire from "./components/Inventaire.vue";
 
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap";
+//import "bootstrap/dist/css/bootstrap.min.css";
+
+
 </script>
 
 <template>
