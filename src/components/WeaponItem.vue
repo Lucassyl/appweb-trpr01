@@ -6,27 +6,36 @@ post: Weapon
 </script>
 
 <template>
-    <div class="col-12 col-md-6 mb-3">
-        <div class="d-flex align-items-center justify-content-between border rounded p-2 bg-light card md-4">
-            <div class="d-flex col-3 fw-bold">
-                {{ post.name }}
+    <div class="card shadow-sm mb-3">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex gap-4">
+                    <span class="fw-bold">
+                        {{ post.name }}
+                    </span>
+                    <span class="">
+                        {{ post.class }}
+                    </span>
+                    <span class="">
+                        Prix: {{ post.prix }}
+                    </span>
+                </div>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-sm btn-primary">A1</button>
+                    <button class="btn btn-sm btn-warning">A2</button>
+                    <button class="btn btn-sm btn-danger">A3</button>
+                </div>
+                
             </div>
-            <div class="d-flex col-3">
-                {{ post.class }}
-            </div>
-            <div class="d-flex col-3">
-                prix: {{ post.prix }}
-            </div>
-            <div class="d-flex col-3">
-                Stock:
-                <span :class="post.stock > 0 ? 'text-success fw-bold' : 'text-danger fw-bold'">
-                {{ post.stock }}
+            <div class="d-flex justify-content-between mt-2">
+                <p class="text-decoration-none small">Details...</p>
+                <span class="post.stock > 0
+                    ? 'text-success fw-bold'
+                    : 'text-danger fw-bold'
+                    "
+                >
+                    Stock: {{ post.stock }}
                 </span>
-            </div>
-            <div class="d-flex gap-2">
-                <button class="btn btn-sm btn-primary">A1</button>
-                <button class="btn btn-sm btn-warning">A2</button>
-                <button class="btn btn-sm btn-danger">A3</button>
             </div>
         </div>
     </div>

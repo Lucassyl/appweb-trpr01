@@ -12,13 +12,11 @@ const handleClick = (event: MouseEvent) => {
 </script>
 
 <template>
-    <div class="col-md-6 mb-3">
-        <div class="card h-100 shadow-sm">
-            <div class="card-header">
-                Modify Weapon
-            </div>
-            <button @click="handleClick">{{ text }}</button>
-        </div>
+    <div class="card p-3">
+        <h5 class="card-header">
+            Modify Weapon
+        </h5>
+        <button @click="handleClick">{{ text }}</button>
     </div>
 </template>
 

@@ -94,13 +94,45 @@ const modifyWeapon = () => {
 </script>
 
 <template>
-    <div class="container mt-4">
-        <h2 class="text-center mb-4">Gun Runner Arsenal</h2>
-        <div class="row">
-            <Ajout v-model="newWeaponData" @add-new-weapon="addNewWeapon"/>
-            <Modification v-model="modifiedWeaponData" @modify-weapon="modifyWeapon"/>
+    <div class="container-fluid py-4">
+        <!--Title-->
+        <div class="row mb-4">
+            <h2 class="col text-center fw-bold">Gun Runner Arsenal</h2>
+        </div>
+        <!--Form-->
+        <div class="row mb-4">
+            <!--Add-->
+            <div class="col-md-6 mb-3 mb-md-0">
+                <Ajout v-model="newWeaponData" @add-new-weapon="addNewWeapon"/>
+            </div>
+            <!--Modify-->
+            <div class="col-md-6">
+                <Modification v-model="modifiedWeaponData" @modify-weapon="modifyWeapon"/>
+            </div>
+        </div>
+        <!--Search-->
+        <div class="row mb-4">
             <Recherche v-model:searchValue="searchValue"/>
-            <WeaponItem v-for="weapon of shownWeapons" :key="weapon.id" :post="weapon"/>
+        </div>
+        <!--List-->
+        <div class="row">
+            <div class="col">
+                <div class="row g-3">
+                    <div class="col-12"
+                        v-for="weapon of shownWeapons" 
+                        :key="weapon.id"
+                    >
+                        <WeaponItem 
+                            :post="weapon"
+                        />
+                        <!--<WeaponItem 
+                            v-for="weapon of shownWeapons" 
+                            :key="weapon.id" 
+                            :post="weapon"
+                        />-->
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
