@@ -91,6 +91,41 @@ const modifyWeapon = () => {
     shownWeapons = computed<Weapon[]>(JSON.parse(JSON.stringify(weapons.value)))
 }*/
 
+const download = () => {
+    /*
+    -#####-REFERENCE-#####-
+    https://www.clearpeople.com/blog/export-data-to-csv-with-typescript-without-format-issues
+    */
+    const data = convertListToCSV();
+
+    const url = URL.createObjectURL(new Blob([data], { type: "text/csv;charset=utf-8;", }));
+
+    const link = document.createElement("a");
+    if (link.download !== undefined) {
+        link.setAttribute('href', url);
+        link.setAttribute('download', "weaponsInventory.csv");
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+    URL.revokeObjectURL(url);
+}
+
+const convertListToCSV = () => {
+    //const headers = Object.keys(shownWeapons[0].join)
+    const headers = ["id","name","class","description","prix","stock"]
+
+    const lignes = shownWeapons.value.map(weapon => 
+        [weapon.id, weapon.name, weapon.class, weapon.description, weapon.prix, weapon.stock]
+    )
+    /*
+    -#####-REFERENCE-#####-
+    https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
+    */
+    return [headers.join(","), ...lignes].join("\n")
+}
+
 </script>
 
 <template>
@@ -107,29 +142,25 @@ const modifyWeapon = () => {
             </div>
             <!--Modify-->
             <div class="col-md-6">
-                <Modification v-model="modifiedWeaponData" @modify-weapon="modifyWeapon"/>
+                <Modification v-if="modifiedWeaponData.id !== 0" v-model="modifiedWeaponData" @modify-weapon="modifyWeapon"/>
+                <div v-else class="card p-3">
+                    <h5 class="card-header">
+                        Modify Weapon
+                    </h5>
+                    <p class="text-center">No weapon selected</p>
+                </div>
             </div>
         </div>
         <!--Search-->
-        <div class="row mb-4">
-            <Recherche v-model:searchValue="searchValue"/>
+        <div class="d-flex gap-2 mb-4">
+            <Recherche v-model:searchValue="searchValue" class="flex-grow-1"/>
+            <button class="btn btn-dark" @click="download">Download</button>
         </div>
-        <!--List-->
         <div class="row">
             <div class="col">
                 <div class="row g-3">
-                    <div class="col-12"
-                        v-for="weapon of shownWeapons" 
-                        :key="weapon.id"
-                    >
-                        <WeaponItem 
-                            :post="weapon"
-                        />
-                        <!--<WeaponItem 
-                            v-for="weapon of shownWeapons" 
-                            :key="weapon.id" 
-                            :post="weapon"
-                        />-->
+                    <div class="col-12" v-for="weapon of shownWeapons"  :key="weapon.id" >
+                        <WeaponItem  :post="weapon" />
                     </div>
                 </div>
             </div>
