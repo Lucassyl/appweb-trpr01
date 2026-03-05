@@ -10,8 +10,8 @@ Learn more about the recommended Project Setup and IDE Support in the [Vue Docs 
 - [ ] Je peux supprimer un produit.
 - [x] Je peux consulter la liste des produits.
 - [x] Je peux rechercher un produit par son nom.
-- [ ] Je peux voir les détails d’un produit.
-- [ ] Je peux voir les quantités disponibles d’un produit.
+- [x] Je peux voir les détails d’un produit.
+- [x] Je peux voir les quantités disponibles d’un produit.
 - [ ] Je peux être averti lorsqu'un produit est en rupture de stock.
 - [x] Je peux exporter la liste des produits en CSV
 
