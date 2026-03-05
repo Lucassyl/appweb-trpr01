@@ -1,9 +1,16 @@
 <script setup lang="ts">
 import { ref } from "vue"
 import type { Weapon, Classification } from '../scripts/types';
+
 defineProps<{
 post: Weapon
 }>()
+
+const emit = defineEmits<{
+    (e: 'delete', id: number): void;
+    (e: 'copy', post: Weapon): void;
+    (e: 'modifie', post: Weapon): void;
+}>();
 
 const showDetail = ref(false);
 
@@ -38,11 +45,19 @@ const toggleDetail = () => {
             <div class="d-flex justify-content-between mt-2">
                 <a v-if="!showDetail" @click="toggleDetail" class="text-decoration-none small">Details...</a>
                 <a v-else @click="toggleDetail" class="text-decoration-none small">Show less</a>
-                <span class="post.stock > 0
+                <!--<span class="post.stock > 0
                     ? 'text-success fw-bold'
                     : 'text-danger fw-bold'
                     "
+                >-->
+                <span
+                    :class="{
+                        'text-danger fw-bold': post.stock <= 0,
+                        'text-warning fw-bold': post.stock > 0 && post.stock <= 2,
+                        'text-white fw-bold': post.stock > 2
+                    }"    
                 >
+                    <span v-if="post.stock <= 2">⚠</span>
                     Stock: {{ post.stock }}
                 </span>
             </div>
