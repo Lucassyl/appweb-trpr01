@@ -13,7 +13,7 @@ Learn more about the recommended Project Setup and IDE Support in the [Vue Docs 
 - [ ] Je peux voir les détails d’un produit.
 - [ ] Je peux voir les quantités disponibles d’un produit.
 - [ ] Je peux être averti lorsqu'un produit est en rupture de stock.
-- [ ] Je peux exporter la liste des produits en CSV
+- [x] Je peux exporter la liste des produits en CSV
 
 
 # Git command / recit
