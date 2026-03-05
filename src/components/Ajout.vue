@@ -4,10 +4,17 @@ import { ref } from 'vue';
 
 const text = ref<string>('Ajouter');
 const weapon = defineModel<Weapon>({ required: true });
+let errorMessage = "";
 
 const emit = defineEmits(['addNewWeapon'])
 const handleClick = (event: MouseEvent) => {
-    emit('addNewWeapon')
+    if(newWeaponIsValid()){
+        emit('addNewWeapon');
+    }
+}
+
+const newWeaponIsValid= () => {
+    return true;
 }
 
 const Classification = [
@@ -34,6 +41,7 @@ const Classification = [
                     class="form-control"
                     type="text" 
                     v-model="weapon.name"
+                    required
                     />
                 </label>
             </div>
@@ -55,6 +63,7 @@ const Classification = [
                     class="form-control" 
                     type="text" 
                     v-model="weapon.description"
+                    required
                     />
                 </label>
             </div>
@@ -65,6 +74,7 @@ const Classification = [
                     class="form-control" 
                     type="number" 
                     v-model="weapon.prix"
+                    required
                     />
                 </label>
             </div>
@@ -75,6 +85,7 @@ const Classification = [
                     class="form-control"
                     type="number" 
                     v-model="weapon.stock"
+                    required
                     />
                 </label>
             </div>

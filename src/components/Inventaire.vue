@@ -11,7 +11,7 @@ const weapons = ref<Weapon[]>([
         id: 0,
         name: 'Trongler',
         class: 'Melee',
-        description: 'The Trongler!',
+        description: 'The Trongler! Fear it!',
         prix: 9999,
         stock: 1,
     }

@@ -1,8 +1,16 @@
 <script setup lang="ts">
+import { ref } from "vue"
 import type { Weapon, Classification } from '../scripts/types';
 defineProps<{
 post: Weapon
 }>()
+
+const showDetail = ref(false);
+
+const toggleDetail = () => {
+    showDetail.value = !showDetail.value;
+}
+
 </script>
 
 <template>
@@ -28,7 +36,8 @@ post: Weapon
                 
             </div>
             <div class="d-flex justify-content-between mt-2">
-                <p class="text-decoration-none small">Details...</p>
+                <a v-if="!showDetail" @click="toggleDetail" class="text-decoration-none small">Details...</a>
+                <a v-else @click="toggleDetail" class="text-decoration-none small">Show less</a>
                 <span class="post.stock > 0
                     ? 'text-success fw-bold'
                     : 'text-danger fw-bold'
@@ -36,6 +45,11 @@ post: Weapon
                 >
                     Stock: {{ post.stock }}
                 </span>
+            </div>
+            <div v-if="showDetail" class="d-flex justify-content-start mt-2">
+                <p>
+                    {{ post.description }}
+                </p>
             </div>
         </div>
     </div>
