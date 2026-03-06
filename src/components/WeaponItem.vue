@@ -2,15 +2,27 @@
 import { ref } from "vue"
 import type { Weapon, Classification } from '../scripts/types';
 
-defineProps<{
+const props = defineProps<{
 post: Weapon
 }>()
 
 const emit = defineEmits<{
-    (e: 'delete', id: number): void;
-    (e: 'copy', post: Weapon): void;
-    (e: 'modifie', post: Weapon): void;
+    (e: 'deleteWeapon', id: number): void;
+    (e: 'copyWeapon', post: Weapon): void;
+    (e: 'editWeapon', post: Weapon): void;
 }>();
+
+const handleClickDelete = (event: MouseEvent) => {
+    emit('deleteWeapon',  props.post.id );
+}
+
+const handleClickCopy = (event: MouseEvent) => {
+    emit('copyWeapon', props.post);
+}
+
+const handleClickEdit = (event: MouseEvent) => {
+    emit('editWeapon', props.post);
+}
 
 const showDetail = ref(false);
 
@@ -36,16 +48,24 @@ const toggleDetail = () => {
                     </span>
                 </div>
                 <div class="d-flex gap-2">
-                    <button class="btn btn-sm btn-primary">A1</button>
-                    <button class="btn btn-sm btn-warning">A2</button>
-                    <button class="btn btn-sm btn-danger">A3</button>
+                    <button @click="handleClickDelete" class="btn btn-sm btn-primary">
+                        <img class="img-fluid " src="../assets/image/delete.ico" alt="iconographie delete" style="width: 16px;"/>
+                    </button>
+                    <button @click="handleClickCopy" class="btn btn-sm btn-warning">
+                        <img class="img-fluid " src="../assets/image/copy.ico" alt="iconographie copy" style="width: 16px;"/>
+                    </button>
+                    <button @click="handleClickEdit" class="btn btn-sm btn-danger">
+                        <img class="img-fluid " src="../assets/image/edit.ico" alt="iconographie edit" style="width: 16px;"/>
+                    </button>
                 </div>
                 
             </div>
             <div class="d-flex justify-content-between mt-2">
                 <a v-if="!showDetail" @click="toggleDetail" class="text-decoration-none small">Details...</a>
                 <a v-else @click="toggleDetail" class="text-decoration-none small">Show less</a>
-                <!--<span class="post.stock > 0
+                <!--
+                Code générer précèdament par ChatGPT et utiliser comme base pour le code en dessous
+                <span class="post.stock > 0
                     ? 'text-success fw-bold'
                     : 'text-danger fw-bold'
                     "

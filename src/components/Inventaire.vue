@@ -18,10 +18,6 @@ const weapons = ref<Weapon[]>([
 ])
 
 const searchValue = ref('')
-/*watch(searchValue, (newValue, oldValue) => {
-    //console.log(`Le texte est passé de ${oldValue} à ${newValue}`)
-    updateShownWeaponList()
-})*/
 
 const shownWeapons = computed(() => {
     if (!searchValue.value) {
@@ -32,21 +28,6 @@ const shownWeapons = computed(() => {
     )
 });
 
-/*const shownWeapons = computed(() => {
-  const search = searchValue.value.toLowerCase()
-
-  if (!search) return weapons.value
-
-  return weapons.value.filter((weapon) =>
-    weapon.name.toLowerCase().includes(search) ||
-    weapon.class.toLowerCase().includes(search) ||
-    weapon.description.toLowerCase().includes(search)
-  )
-})*/
-
-/*let shownWeapons = computed<Weapon[]>(
-    JSON.parse(JSON.stringify(weapons.value))
-);*/
 
 const newWeaponData = ref<Weapon>({
     id: 0,
@@ -82,14 +63,37 @@ const addNewWeapon = () => {
   newWeaponData.value.stock = 0;
 }
 
-const modifyWeapon = () => {
-
+const modifyWeapon = (weapon: Weapon) => {
+    if(weapon)
+    {
+        
+    }
 }
 
-/*const updateShownWeaponList = () => {
-    //const shownWeapons = ref<Weapon[]>(weapons.value.slice())
-    shownWeapons = computed<Weapon[]>(JSON.parse(JSON.stringify(weapons.value)))
-}*/
+const deleteWeapon = (id: number) => {
+    if(id)
+    {
+        
+    }
+}
+
+const copyWeapon = (weapon: Weapon) => {
+    if(weapon)
+    {
+        newWeaponData.value.name = weapon.name;
+        newWeaponData.value.class = weapon.class;
+        newWeaponData.value.description = weapon.description;
+        newWeaponData.value.prix = weapon.prix;
+        newWeaponData.value.stock = weapon.stock
+    }
+}
+
+const editWeapon = (weapon: Weapon) => {
+    if(weapon)
+    {
+        
+    }
+}
 
 const download = () => {
     /*
@@ -113,7 +117,6 @@ const download = () => {
 }
 
 const convertListToCSV = () => {
-    //const headers = Object.keys(shownWeapons[0].join)
     const headers = ["id","name","class","description","prix","stock"]
 
     const lignes = shownWeapons.value.map(weapon => 
@@ -160,7 +163,7 @@ const convertListToCSV = () => {
             <div class="col">
                 <div class="row g-3">
                     <div class="col-12" v-for="weapon of shownWeapons"  :key="weapon.id" >
-                        <WeaponItem  :post="weapon" />
+                        <WeaponItem  :post="weapon" @delete-weapon="deleteWeapon" @copy-weapon="copyWeapon" @edit-weapon="editWeapon"/>
                     </div>
                 </div>
             </div>
