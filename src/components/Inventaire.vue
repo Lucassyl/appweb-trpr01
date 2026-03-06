@@ -18,7 +18,7 @@ const resetWeaponData = ref<Weapon>({
 
 const weapons = ref<Weapon[]>([
     {
-        id: 0,
+        id: 1,
         name: 'Trongler',
         class: 'Melee',
         description: 'The Trongler! Fear it! \n Warning this weapon is none modifiable!',
@@ -73,8 +73,8 @@ const modifiedWeaponData = ref<Weapon>({
 const deleteWeapon = (id: number) => {
     if(id)
     {
-        /*const index = weapons.value.findIndex(modifiedWeapon => modifiedWeapon.id === id);
-        weapons.value.splice(index, 1)*/
+        const index = weapons.value.findIndex(modifiedWeapon => modifiedWeapon.id === id);
+        weapons.value.splice(index, 1)
     }
 }
 
@@ -195,6 +195,9 @@ const convertListToCSV = () => {
                     <div class="col-12" v-for="weapon of shownWeapons"  :key="weapon.id" >
                         <WeaponItem  :post="weapon" @delete-weapon="deleteWeapon" @copy-weapon="copyWeapon" @edit-weapon="editWeapon"/>
                     </div>
+                    <!--<div v-if="weapon">
+
+                    </div>-->
                 </div>
             </div>
         </div>
