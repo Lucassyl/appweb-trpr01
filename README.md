@@ -7,7 +7,7 @@ Learn more about the recommended Project Setup and IDE Support in the [Vue Docs 
 - [x] Je peux ajouter un nouveau produit.
 - [x] Je peux modifier un produit existant.
 - [x] Je peux dupliquer un produit existant pour en créer un nouveau rapidement.
-- [ ] Je peux supprimer un produit.
+- [x] Je peux supprimer un produit.
 - [x] Je peux consulter la liste des produits.
 - [x] Je peux rechercher un produit par son nom.
 - [x] Je peux voir les détails d’un produit.
