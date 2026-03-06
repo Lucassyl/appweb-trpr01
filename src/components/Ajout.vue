@@ -3,7 +3,8 @@ import type { Weapon, Classification } from '../scripts/types';
 import { ref } from 'vue';
 
 const text = ref<string>('Ajouter');
-const weapon = defineModel<Weapon>({ required: true });
+const weapon = defineModel<Weapon>('weapon', { required: true });
+const shownText = defineModel<string>('shownText')
 let errorMessage = "";
 
 const emit = defineEmits(['addNewWeapon'])
@@ -24,14 +25,12 @@ const Classification = [
     "Explosives",
     "Melee"
 ]
-
-
 </script>
 
 <template>
     <div class="card h-100 p-3">
         <h5 class="card-header">
-            Add Weapon
+            {{ shownText }} Arme
         </h5>
         <div class="card-body">
             <div class="mb-3">

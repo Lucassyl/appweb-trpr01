@@ -5,13 +5,23 @@ import Ajout from "./Ajout.vue";
 import Modification from "./Modification.vue";
 import Recherche from "./Recherche.vue";
 import WeaponItem from "./WeaponItem.vue";
+import Popup from "./Popup.vue";
+
+const resetWeaponData = ref<Weapon>({
+    id: 0,
+    name: '',
+    class: 'Melee',
+    description: '',
+    prix: 0,
+    stock: 0,
+})
 
 const weapons = ref<Weapon[]>([
     {
         id: 0,
         name: 'Trongler',
         class: 'Melee',
-        description: 'The Trongler! Fear it!',
+        description: 'The Trongler! Fear it! \n Warning this weapon is none modifiable!',
         prix: 9999,
         stock: 1,
     }
@@ -28,7 +38,7 @@ const shownWeapons = computed(() => {
     )
 });
 
-
+const newWeaponText = ref<string>("Ajouter")
 const newWeaponData = ref<Weapon>({
     id: 0,
     name: '',
@@ -37,6 +47,19 @@ const newWeaponData = ref<Weapon>({
     prix: 0,
     stock: 0,
 });
+
+const addNewWeapon = () => {
+    weapons.value.push({
+        id: Date.now(),
+        name: newWeaponData.value.name,
+        class: newWeaponData.value.class,
+        description: newWeaponData.value.description,
+        prix: newWeaponData.value.prix,
+        stock: newWeaponData.value.stock,
+    });
+    newWeaponData.value = resetWeaponData.value;
+    newWeaponText.value = "Ajouter"
+}
 
 const modifiedWeaponData = ref<Weapon>({
     id: 0,
@@ -47,35 +70,22 @@ const modifiedWeaponData = ref<Weapon>({
     stock: 0,
 })
 
-const addNewWeapon = () => {
-    weapons.value.push({
-    id: Date.now(),
-    name: newWeaponData.value.name,
-    class: newWeaponData.value.class,
-    description: newWeaponData.value.description,
-    prix: newWeaponData.value.prix,
-    stock: newWeaponData.value.stock,
-  });
-  newWeaponData.value.name = "";
-  newWeaponData.value.class = "Melee"
-  newWeaponData.value.description = "";
-  newWeaponData.value.prix = 0;
-  newWeaponData.value.stock = 0;
-}
-
-const modifyWeapon = (weapon: Weapon) => {
-    if(weapon)
-    {
-        
-    }
-}
-
 const deleteWeapon = (id: number) => {
     if(id)
     {
-        
+        /*const index = weapons.value.findIndex(modifiedWeapon => modifiedWeapon.id === id);
+        weapons.value.splice(index, 1)*/
     }
 }
+
+/*const popupTriggers = ref({
+    buttonTrigger: false
+});
+
+const TogglePopup = (trigger) => {
+    popupTriggers.value[trigger] = !popupTriggers.value
+    [trigger]
+}*/
 
 const copyWeapon = (weapon: Weapon) => {
     if(weapon)
@@ -84,14 +94,29 @@ const copyWeapon = (weapon: Weapon) => {
         newWeaponData.value.class = weapon.class;
         newWeaponData.value.description = weapon.description;
         newWeaponData.value.prix = weapon.prix;
-        newWeaponData.value.stock = weapon.stock
+        newWeaponData.value.stock = weapon.stock;
+        newWeaponText.value = "Copier";
     }
 }
 
 const editWeapon = (weapon: Weapon) => {
     if(weapon)
     {
-        
+        modifiedWeaponData.value.id = weapon.id;
+        modifiedWeaponData.value.name = weapon.name;
+        modifiedWeaponData.value.class = weapon.class;
+        modifiedWeaponData.value.description = weapon.description;
+        modifiedWeaponData.value.prix = weapon.prix;
+        modifiedWeaponData.value.stock = weapon.stock;
+    }
+}
+
+const modifyWeapon = (weapon: Weapon) => {
+    if(weapon)
+    {
+        const index = weapons.value.findIndex(modifiedWeapon => modifiedWeapon.id === weapon.id);
+        weapons.value[index] = weapon;
+        modifiedWeaponData.value = resetWeaponData.value;
     }
 }
 
@@ -126,7 +151,7 @@ const convertListToCSV = () => {
     -#####-REFERENCE-#####-
     https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
     */
-    return [headers.join(","), ...lignes].join("\n")
+    return [headers.join(","), ...lignes].join("\n");
 }
 
 </script>
@@ -141,24 +166,29 @@ const convertListToCSV = () => {
         <div class="row mb-4">
             <!--Add-->
             <div class="col-md-6 mb-3 mb-md-0">
-                <Ajout v-model="newWeaponData" @add-new-weapon="addNewWeapon"/>
+                <Ajout v-model:weapon="newWeaponData" v-model:shownText="newWeaponText" @add-new-weapon="addNewWeapon"/>
             </div>
             <!--Modify-->
             <div class="col-md-6">
                 <Modification v-if="modifiedWeaponData.id !== 0" v-model="modifiedWeaponData" @modify-weapon="modifyWeapon"/>
                 <div v-else class="card p-3">
                     <h5 class="card-header">
-                        Modify Weapon
+                        Modifier Weapon
                     </h5>
-                    <p class="text-center">No weapon selected</p>
+                    <p class="text-center">Aucune arme selectioné</p>
                 </div>
             </div>
         </div>
         <!--Search-->
         <div class="d-flex gap-2 mb-4">
             <Recherche v-model:searchValue="searchValue" class="flex-grow-1"/>
-            <button class="btn btn-dark" @click="download">Download</button>
+            <button class="btn btn-dark" @click="download">Télécharger</button>
         </div>
+        <!--<Popup
+            v-if="popupTriggers.buttonTrigger"
+            :TogglePopup="() => TogglePopup('buttonTrigger')">
+            <h2>Confirmer la suppresion</h2>
+        </Popup>-->
         <div class="row">
             <div class="col">
                 <div class="row g-3">

@@ -61,8 +61,8 @@ const toggleDetail = () => {
                 
             </div>
             <div class="d-flex justify-content-between mt-2">
-                <a v-if="!showDetail" @click="toggleDetail" class="text-decoration-none small">Details...</a>
-                <a v-else @click="toggleDetail" class="text-decoration-none small">Show less</a>
+                <a v-if="!showDetail" @click="toggleDetail" class="text-decoration-none small clickable-text" >Details...</a>
+                <a v-else @click="toggleDetail" class="text-decoration-none small clickable-text">Show less</a>
                 <!--
                 Code générer précèdament par ChatGPT et utiliser comme base pour le code en dessous
                 <span class="post.stock > 0
@@ -91,4 +91,8 @@ const toggleDetail = () => {
 </template>
 
 <style scoped>
+.clickable-text {
+  cursor: pointer;
+  transition: color 0.3s;
+}
 </style>
