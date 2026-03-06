@@ -5,14 +5,14 @@ This template should help get you started developing with Vue 3 and TypeScript i
 Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
 
 - [x] Je peux ajouter un nouveau produit.
-- [ ] Je peux modifier un produit existant.
+- [x] Je peux modifier un produit existant.
 - [x] Je peux dupliquer un produit existant pour en créer un nouveau rapidement.
 - [ ] Je peux supprimer un produit.
 - [x] Je peux consulter la liste des produits.
 - [x] Je peux rechercher un produit par son nom.
 - [x] Je peux voir les détails d’un produit.
 - [x] Je peux voir les quantités disponibles d’un produit.
-- [ ] Je peux être averti lorsqu'un produit est en rupture de stock.
+- [x] Je peux être averti lorsqu'un produit est en rupture de stock.
 - [x] Je peux exporter la liste des produits en CSV
 
 
