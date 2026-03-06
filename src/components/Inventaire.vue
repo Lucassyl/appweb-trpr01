@@ -195,9 +195,9 @@ const convertListToCSV = () => {
                     <div class="col-12" v-for="weapon of shownWeapons"  :key="weapon.id" >
                         <WeaponItem  :post="weapon" @delete-weapon="deleteWeapon" @copy-weapon="copyWeapon" @edit-weapon="editWeapon"/>
                     </div>
-                    <!--<div v-if="weapon">
-
-                    </div>-->
+                    <div v-if="shownWeapons.length == 0">
+                        <h1>L'inventaire est vide!</h1>
+                    </div>
                 </div>
             </div>
         </div>
