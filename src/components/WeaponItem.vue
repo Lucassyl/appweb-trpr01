@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue"
-import type { Weapon, Classification } from '../scripts/types';
+import type { Weapon } from '../scripts/types';
 
 const props = defineProps<{
 post: Weapon
@@ -12,15 +12,15 @@ const emit = defineEmits<{
     (e: 'editWeapon', post: Weapon): void;
 }>();
 
-const handleClickDelete = (event: MouseEvent) => {
+const handleClickDelete = () => {
     emit('deleteWeapon',  props.post.id );
 }
 
-const handleClickCopy = (event: MouseEvent) => {
+const handleClickCopy = () => {
     emit('copyWeapon', props.post);
 }
 
-const handleClickEdit = (event: MouseEvent) => {
+const handleClickEdit = () => {
     emit('editWeapon', props.post);
 }
 

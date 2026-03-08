@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, watch, computed} from "vue";
-import type { Weapon, Classification } from '../scripts/types';
+import { ref, computed} from "vue";
+import type { Weapon} from '../scripts/types';
 import Ajout from "./Ajout.vue";
 import Modification from "./Modification.vue";
 import Recherche from "./Recherche.vue";
@@ -70,22 +70,29 @@ const modifiedWeaponData = ref<Weapon>({
     stock: 0,
 })
 
+const weaponToDelete = ref<number>()
+const TogglePopup = ref<boolean>(false)
+
 const deleteWeapon = (id: number) => {
     if(id)
     {
-        const index = weapons.value.findIndex(modifiedWeapon => modifiedWeapon.id === id);
-        weapons.value.splice(index, 1)
+        weaponToDelete.value = id;
+        TogglePopup.value = true;
     }
 }
 
-/*const popupTriggers = ref({
-    buttonTrigger: false
-});
+const confirmDelete = () => {
+    if (weaponToDelete){
+        const index = weapons.value.findIndex(modifiedWeapon => modifiedWeapon.id === weaponToDelete.value);
+        weapons.value.splice(index, 1)
+        TogglePopup.value = false;
+    }
+}
 
-const TogglePopup = (trigger) => {
-    popupTriggers.value[trigger] = !popupTriggers.value
-    [trigger]
-}*/
+const closePopup = () => {
+    weaponToDelete.value = -1;
+    TogglePopup.value = false;
+}
 
 const copyWeapon = (weapon: Weapon) => {
     if(weapon)
@@ -184,11 +191,11 @@ const convertListToCSV = () => {
             <Recherche v-model:searchValue="searchValue" class="flex-grow-1"/>
             <button class="btn btn-dark" @click="download">Télécharger</button>
         </div>
-        <!--<Popup
-            v-if="popupTriggers.buttonTrigger"
-            :TogglePopup="() => TogglePopup('buttonTrigger')">
-            <h2>Confirmer la suppresion</h2>
-        </Popup>-->
+        <Popup
+            v-if="TogglePopup"
+            @confirm-delete="confirmDelete"
+            @close-popup="closePopup"
+        />
         <div class="row">
             <div class="col">
                 <div class="row g-3">
